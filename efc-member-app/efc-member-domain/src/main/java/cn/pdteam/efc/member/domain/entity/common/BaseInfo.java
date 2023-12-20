@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * 学生基本信息
@@ -17,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class BaseInfo {
+@Accessors(chain = true)
+public class BaseInfo {
 
     /**
      * 姓名

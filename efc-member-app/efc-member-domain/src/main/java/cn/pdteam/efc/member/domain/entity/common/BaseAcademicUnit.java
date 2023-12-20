@@ -3,6 +3,7 @@ package cn.pdteam.efc.member.domain.entity.common;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * 学生年级、专业等信息
@@ -10,7 +11,10 @@ import lombok.NoArgsConstructor;
  * @author dongzhang.li
  */
 @Data
-public abstract class BaseAcademicUnit {
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
+public class BaseAcademicUnit {
 
     /**
      * 学院id

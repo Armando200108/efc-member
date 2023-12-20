@@ -3,6 +3,7 @@ package cn.pdteam.efc.member.domain.entity.common;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * 联系方式
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 public class ContactInfo {
 
     /**
