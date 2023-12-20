@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * 分页对象
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 public class Page<T> {
 
     /**
@@ -45,5 +47,15 @@ public class Page<T> {
      * 查询结果
      */
     private List<T> data;
+
+    public Page<T> mapperCondition(T condition) {
+        this.condition = condition;
+        return this;
+    }
+
+    public Page(int page,int size) {
+        this.page = page;
+        this.size = size;
+    }
 
 }

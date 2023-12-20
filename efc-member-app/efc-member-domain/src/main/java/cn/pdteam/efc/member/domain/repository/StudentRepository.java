@@ -28,8 +28,8 @@ public interface StudentRepository extends Repository<Student, Long> {
      * @param data 聚合根对象
      */
     @Override
-    default void save(Student data) {
-        Repository.super.save(data);
+    default Student save(Student data) {
+        return Repository.super.save(data);
     }
 
     /**

@@ -26,7 +26,7 @@ public interface Repository<T, K> {
      *
      * @param data 聚合根对象
      */
-    default void save(T data) {
+    default T save(T data) {
         throw new UnsupportedOperationException("save not implemented");
     }
 

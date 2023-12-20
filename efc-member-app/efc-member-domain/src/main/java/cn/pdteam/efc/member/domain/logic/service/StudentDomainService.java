@@ -1,7 +1,6 @@
 package cn.pdteam.efc.member.domain.logic.service;
 
-import java.util.List;
-
+import cn.pdteam.efc.member.domain.entity.student.StudentBaseInfo;
 import cn.pdteam.efc.member.domain.model.Student;
 
 /**
@@ -9,30 +8,32 @@ import cn.pdteam.efc.member.domain.model.Student;
  *
  * @author dongzhang.li
  */
-public interface StudentService {
+public interface StudentDomainService {
 
     /**
-     * 根据学生ID获取学生信息
+     * 查询学生信息
+     * 通过主键
      *
-     * @param studentId 学生ID
+     * @param keyId 主键
      * @return 学生信息
      */
-    Student getStudentById(long studentId);
+    Student queryStudentInfo(Long keyId);
 
     /**
-     * 根据学号查询学生信息
+     * 查询学生信息
+     * 通过学号
      *
      * @param studentId 学号
      * @return 学生信息
      */
-    List<Student> getStudentsByStudentId(String studentId);
+    Student queryStudentInfo(String studentId);
 
     /**
      * 注册新学生
      *
-     * @param student 学生信息
+     * @param studentId 学号
      */
-    void registerStudent(Student student);
+    StudentBaseInfo registerStudent(String studentId);
 
     /**
      * 更新学生信息
@@ -41,11 +42,5 @@ public interface StudentService {
      */
     void updateStudent(Student student);
 
-    /**
-     * 删除学生信息
-     *
-     * @param studentId 学号
-     */
-    void deleteStudent(long studentId);
 
 }
