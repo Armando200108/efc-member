@@ -25,7 +25,7 @@ public interface MemberInfoApi {
      * @param request 注册信息
      * @return 是否注册成功
      */
-    @PostMapping("/register/")
+    @PostMapping("/register")
     ResultBase<RegisterMemberResponse> registerStudent(@RequestBody @NotNull RegisterMemberRequest request);
 
 }
