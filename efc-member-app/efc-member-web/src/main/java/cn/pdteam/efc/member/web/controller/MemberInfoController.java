@@ -9,8 +9,6 @@ import cn.pdteam.efc.member.api.response.RegisterMemberResponse;
 import cn.pdteam.efc.member.api.response.base.ResultBase;
 import cn.pdteam.efc.member.business.service.StudentInfoService;
 import cn.pdteam.efc.member.business.service.TeacherInfoService;
-import cn.pdteam.efc.member.domain.enums.common.ErrorCodeEnum;
-import cn.pdteam.efc.member.domain.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController

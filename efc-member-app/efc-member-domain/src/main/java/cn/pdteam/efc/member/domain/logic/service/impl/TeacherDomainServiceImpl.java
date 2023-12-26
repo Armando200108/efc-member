@@ -5,12 +5,12 @@ import com.alibaba.fastjson2.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.pdteam.efc.component.Page;
 import cn.pdteam.efc.member.domain.entity.student.TeacherBaseInfo;
 import cn.pdteam.efc.member.domain.logic.handler.RegisterTeacherHandler;
 import cn.pdteam.efc.member.domain.logic.service.TeacherDomainService;
 import cn.pdteam.efc.member.domain.model.Teacher;
 import cn.pdteam.efc.member.domain.repository.TeacherRepository;
-import cn.pdteam.efc.member.domain.repository.base.Page;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

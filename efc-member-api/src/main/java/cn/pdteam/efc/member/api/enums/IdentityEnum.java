@@ -3,8 +3,8 @@ package cn.pdteam.efc.member.api.enums;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import cn.pdteam.efc.member.api.enums.common.ErrorCodeEnum;
-import cn.pdteam.efc.member.api.exception.IllegalRequestException;
+import cn.pdteam.efc.enums.ErrorCodeEnum;
+import cn.pdteam.efc.exception.IllegalRequestException;
 import lombok.Getter;
 
 @Getter

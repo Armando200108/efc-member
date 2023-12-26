@@ -14,7 +14,6 @@
     <artifactId>efc-member-app</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>efc-member-biz</module>
         <module>efc-member-domain</module>
         <module>efc-member-infrastructure</module>
         <module>efc-member-web</module>

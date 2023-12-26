@@ -3,12 +3,12 @@ package cn.pdteam.efc.member.domain.logic.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.pdteam.efc.component.Page;
 import cn.pdteam.efc.member.domain.entity.student.StudentBaseInfo;
 import cn.pdteam.efc.member.domain.logic.handler.RegisterStudentHandler;
 import cn.pdteam.efc.member.domain.logic.service.StudentDomainService;
 import cn.pdteam.efc.member.domain.model.Student;
 import cn.pdteam.efc.member.domain.repository.StudentRepository;
-import cn.pdteam.efc.member.domain.repository.base.Page;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
