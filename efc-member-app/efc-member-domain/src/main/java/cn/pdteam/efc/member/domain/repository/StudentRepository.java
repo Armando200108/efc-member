@@ -1,8 +1,8 @@
 package cn.pdteam.efc.member.domain.repository;
 
+import cn.pdteam.efc.component.Page;
+import cn.pdteam.efc.component.Repository;
 import cn.pdteam.efc.member.domain.model.Student;
-import cn.pdteam.efc.member.domain.repository.base.Page;
-import cn.pdteam.efc.member.domain.repository.base.Repository;
 
 /**
  * 学生Repository接口
