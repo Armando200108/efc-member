@@ -18,9 +18,20 @@
     </modules>
 
     <properties>
+        <alibaba.nacos.version>2022.0.0.0</alibaba.nacos.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+                <version>${alibaba.nacos.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
