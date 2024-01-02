@@ -12,6 +12,7 @@ import cn.pdteam.efc.member.domain.model.Student;
 import cn.pdteam.efc.member.domain.model.Teacher;
 import cn.pdteam.efc.member.domain.repository.StudentRepository;
 import cn.pdteam.efc.member.domain.repository.TeacherRepository;
+import cn.pdteam.efc.user_auth.external.http.OuterUserLoaderApiFeignService;
 import lombok.extern.slf4j.Slf4j;
 
 @Component

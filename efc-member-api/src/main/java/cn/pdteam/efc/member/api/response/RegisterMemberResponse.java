@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterMemberResponse {
 
+    private Long    id;
+
     /**
      * 学号/工号
      */
@@ -21,5 +23,10 @@ public class RegisterMemberResponse {
      * 姓名
      */
     private String  name;
+
+    /**
+     * 身份证号
+     */
+    private String  idCardLastSix;
 
 }

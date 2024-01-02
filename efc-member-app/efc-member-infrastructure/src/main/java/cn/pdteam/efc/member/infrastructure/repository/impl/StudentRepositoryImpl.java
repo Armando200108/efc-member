@@ -7,11 +7,11 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Repository;
 
 import cn.pdteam.efc.component.Page;
+import cn.pdteam.efc.enums.member.ChineseEthnicityEnum;
+import cn.pdteam.efc.enums.member.GenderEnum;
 import cn.pdteam.efc.member.domain.entity.common.ContactInfo;
 import cn.pdteam.efc.member.domain.entity.student.StudentAcademicUnit;
 import cn.pdteam.efc.member.domain.entity.student.StudentBaseInfo;
-import cn.pdteam.efc.member.domain.enums.student.ChineseEthnicityEnum;
-import cn.pdteam.efc.member.domain.enums.student.GenderEnum;
 import cn.pdteam.efc.member.domain.model.Student;
 import cn.pdteam.efc.member.domain.repository.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
