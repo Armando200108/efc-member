@@ -1,12 +1,14 @@
 package cn.pdteam.efc.member.api;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.pdteam.efc.component.ResultBase;
 import cn.pdteam.efc.member.api.request.RegisterMemberRequest;
+import cn.pdteam.efc.member.api.response.QueryMemberInfoResponse;
 import cn.pdteam.efc.member.api.response.RegisterMemberResponse;
-import cn.pdteam.efc.member.api.response.base.ResultBase;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,9 +17,9 @@ import jakarta.validation.constraints.NotNull;
  *
  * @author dongzhang.li
  */
-@RequestMapping("/api/member/info")
+@RequestMapping("/api/public/member/info")
 @Valid
-public interface MemberInfoApi {
+public interface PublicMemberInfoApi {
 
     /**
      * 注册新成员
@@ -26,6 +28,6 @@ public interface MemberInfoApi {
      * @return 是否注册成功
      */
     @PostMapping("/register")
-    ResultBase<RegisterMemberResponse> registerStudent(@RequestBody @NotNull RegisterMemberRequest request);
+    ResultBase<RegisterMemberResponse> register(@RequestBody @NotNull RegisterMemberRequest request);
 
 }

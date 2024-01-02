@@ -8,9 +8,9 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import cn.pdteam.efc.component.ResultBase;
+import cn.pdteam.efc.enums.common.ErrorCodeEnum;
 import cn.pdteam.efc.exception.IllegalRequestException;
-import cn.pdteam.efc.member.api.response.base.ResultBase;
-import cn.pdteam.efc.member.domain.enums.common.ErrorCodeEnum;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 

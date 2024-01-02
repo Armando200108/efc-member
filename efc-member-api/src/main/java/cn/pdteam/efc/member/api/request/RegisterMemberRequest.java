@@ -1,6 +1,6 @@
 package cn.pdteam.efc.member.api.request;
 
-import cn.pdteam.efc.member.api.enums.IdentityEnum;
+import cn.pdteam.efc.enums.member.IdentityEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

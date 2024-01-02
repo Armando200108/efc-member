@@ -2,9 +2,9 @@ package cn.pdteam.efc.member.domain.entity.student;
 
 import java.time.LocalDate;
 
+import cn.pdteam.efc.enums.member.ChineseEthnicityEnum;
+import cn.pdteam.efc.enums.member.GenderEnum;
 import cn.pdteam.efc.member.domain.entity.common.BaseInfo;
-import cn.pdteam.efc.member.domain.enums.student.ChineseEthnicityEnum;
-import cn.pdteam.efc.member.domain.enums.student.GenderEnum;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

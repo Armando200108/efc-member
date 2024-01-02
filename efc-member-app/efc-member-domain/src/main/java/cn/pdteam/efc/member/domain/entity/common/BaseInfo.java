@@ -2,8 +2,8 @@ package cn.pdteam.efc.member.domain.entity.common;
 
 import java.time.LocalDate;
 
-import cn.pdteam.efc.member.domain.enums.student.ChineseEthnicityEnum;
-import cn.pdteam.efc.member.domain.enums.student.GenderEnum;
+import cn.pdteam.efc.enums.member.ChineseEthnicityEnum;
+import cn.pdteam.efc.enums.member.GenderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class BaseInfo {
     /**
      * 性别
      */
-    private GenderEnum           gender;
+    private GenderEnum gender;
 
     /**
      * 民族
