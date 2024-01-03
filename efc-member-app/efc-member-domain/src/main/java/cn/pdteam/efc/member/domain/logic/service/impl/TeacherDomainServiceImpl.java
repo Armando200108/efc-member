@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.pdteam.efc.component.Page;
+import cn.pdteam.efc.member.domain.entity.result.RegisterResult;
 import cn.pdteam.efc.member.domain.entity.student.TeacherBaseInfo;
 import cn.pdteam.efc.member.domain.logic.handler.RegisterTeacherHandler;
 import cn.pdteam.efc.member.domain.logic.service.TeacherDomainService;
@@ -59,11 +60,12 @@ public class TeacherDomainServiceImpl implements TeacherDomainService {
      * @param teacherId 工号
      */
     @Override
-    public TeacherBaseInfo registerTeacher(String teacherId) {
+    public RegisterResult<TeacherBaseInfo> registerTeacher(String teacherId) {
         log.info("domain ==> TeacherDomainServiceImpl.registerTeacher, teacherId: {}", teacherId);
-        Teacher teacher = teacherRepository.findByKey(registerTeacherHandler.handle(teacherId));
+        Long id = registerTeacherHandler.handle(teacherId);
+        Teacher teacher = teacherRepository.findByKey(id);
         log.info("domain ==> TeacherDomainServiceImpl.registerTeacher, teacher: {}", teacher);
-        return teacher.getBaseInfo();
+        return new RegisterResult<>(id, teacher.getBaseInfo());
     }
 
     /**

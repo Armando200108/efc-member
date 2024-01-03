@@ -9,6 +9,7 @@ import cn.pdteam.efc.member.api.response.QueryMemberInfoResponse;
 import cn.pdteam.efc.member.api.response.RegisterMemberResponse;
 import cn.pdteam.efc.member.business.converter.StudentConverter;
 import cn.pdteam.efc.member.business.support.service.StudentInfoService;
+import cn.pdteam.efc.member.domain.entity.result.RegisterResult;
 import cn.pdteam.efc.member.domain.entity.student.StudentBaseInfo;
 import cn.pdteam.efc.member.domain.logic.service.StudentDomainService;
 import cn.pdteam.efc.member.domain.model.Student;
@@ -32,8 +33,8 @@ public class StudentServiceImpl implements StudentInfoService {
     @Override
     public RegisterMemberResponse registerStudent(String studentId) {
         log.info("register student business start!");
-        StudentBaseInfo studentBaseInfo = studentDomainService.registerStudent(studentId);
-        RegisterMemberResponse studentResponse = studentConverter.baseInfoConvert2RegisterResp(studentBaseInfo);
+        RegisterResult<StudentBaseInfo> studentBaseInfoRegisterResult = studentDomainService.registerStudent(studentId);
+        RegisterMemberResponse studentResponse = studentConverter.RegisterResultConvert2RegisterResp(studentBaseInfoRegisterResult);
         log.info("register student business end!");
         return studentResponse;
     }

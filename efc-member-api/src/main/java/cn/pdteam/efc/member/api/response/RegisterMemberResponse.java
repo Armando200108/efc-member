@@ -29,4 +29,9 @@ public class RegisterMemberResponse {
      */
     private String  idCardLastSix;
 
+    /**
+     * 证件照
+     */
+    private String idCardPhoto;
+
 }
