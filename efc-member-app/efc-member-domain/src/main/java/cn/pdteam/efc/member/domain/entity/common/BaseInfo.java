@@ -6,7 +6,6 @@ import cn.pdteam.efc.enums.member.ChineseEthnicityEnum;
 import cn.pdteam.efc.enums.member.GenderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 

@@ -7,28 +7,28 @@ import java.util.function.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cn.pdteam.efc.member.domain.entity.student.TeacherBaseInfo;
 import cn.pdteam.efc.member.domain.logic.handler.base.BaseHandler;
-import cn.pdteam.efc.member.domain.model.Student;
 import cn.pdteam.efc.member.domain.model.Teacher;
-import cn.pdteam.efc.member.domain.repository.StudentRepository;
 import cn.pdteam.efc.member.domain.repository.TeacherRepository;
-import cn.pdteam.efc.user_auth.external.http.OuterUserLoaderApiFeignService;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class RegisterTeacherHandler extends BaseHandler<Teacher,Long> {
+public class RegisterTeacherHandler extends BaseHandler<Teacher, Long> {
 
     @Autowired
     private TeacherRepository repository;
 
     public Long handle(String teacherId) {
         // TODO 从oracle服务器获取外部数据
-
+        Teacher teacher = new Teacher();
+        teacher.setId(145313131431L);
+        teacher.setBaseInfo(new TeacherBaseInfo().setTeacherId(teacherId));
         // TODO 组装实体，组装聚合根
 
         // TODO 调用doHandle方法
-        return doHandle(() -> repository.findByKey(1L));
+        return doHandle(() -> repository.findByKey(teacher.getId()));
     }
 
     /**

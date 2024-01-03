@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.pdteam.efc.component.Page;
+import cn.pdteam.efc.member.domain.entity.result.RegisterResult;
 import cn.pdteam.efc.member.domain.entity.student.StudentBaseInfo;
 import cn.pdteam.efc.member.domain.logic.handler.RegisterStudentHandler;
 import cn.pdteam.efc.member.domain.logic.service.StudentDomainService;
@@ -60,9 +61,10 @@ public class StudentDomainServiceImpl implements StudentDomainService {
      * @param studentId 学号
      */
     @Override
-    public StudentBaseInfo registerStudent(String studentId) {
+    public RegisterResult<StudentBaseInfo> registerStudent(String studentId) {
         Long id = registerStudentHandler.handle(studentId);
-        return studentRepository.findByKey(id).getBasicInfo();
+        StudentBaseInfo basicInfo = studentRepository.findByKey(id).getBasicInfo();
+        return new RegisterResult<>(id, basicInfo);
     }
 
     /**

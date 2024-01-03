@@ -6,7 +6,7 @@ import org.mapstruct.factory.Mappers;
 
 import cn.pdteam.efc.member.api.response.QueryMemberInfoResponse;
 import cn.pdteam.efc.member.api.response.RegisterMemberResponse;
-
+import cn.pdteam.efc.member.domain.entity.result.RegisterResult;
 import cn.pdteam.efc.member.domain.entity.student.TeacherBaseInfo;
 import cn.pdteam.efc.member.domain.model.Teacher;
 
@@ -15,10 +15,12 @@ public interface TeacherConverter {
 
     TeacherConverter INSTANCE = Mappers.getMapper(TeacherConverter.class);
 
-    @Mapping(source = "teacherId", target = "memberId")
-    @Mapping(source = "name", target = "name")
-    @Mapping(target = "idCardLastSix", expression = "java(baseInfo.getIdCardNumber().substring(baseInfo.getIdCardNumber().length() - 6))")
-    RegisterMemberResponse baseInfoConvert2RegisterResp(TeacherBaseInfo baseInfo);
+    @Mapping(target = "id", expression = "java(registerResult.getId())")
+    @Mapping(target = "memberId", expression = "java(registerResult.getPersonInfo().getTeacherId())")
+    @Mapping(target = "name", expression = "java(registerResult.getPersonInfo().getName())")
+    @Mapping(target = "idCardLastSix", expression = "java(registerResult.getPersonInfo().getIdCardNumber().substring(registerResult.getPersonInfo().getIdCardNumber().length() - 6))")
+    @Mapping(target = "idCardPhoto", expression = "java(registerResult.getPersonInfo().getIdCardPhoto())")
+    RegisterMemberResponse registerResultConvert2RegisterResp(RegisterResult<TeacherBaseInfo> registerResult);
 
 
     @Mapping(target = "teacherId", expression = "java(teacher.getBaseInfo().getTeacherId())")

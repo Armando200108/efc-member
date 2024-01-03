@@ -1,5 +1,6 @@
 package cn.pdteam.efc.member.domain.logic.service;
 
+import cn.pdteam.efc.member.domain.entity.result.RegisterResult;
 import cn.pdteam.efc.member.domain.entity.student.TeacherBaseInfo;
 import cn.pdteam.efc.member.domain.model.Teacher;
 
@@ -28,7 +29,7 @@ public interface TeacherDomainService {
         *
         * @param teacherId 工号
         */
-        TeacherBaseInfo registerTeacher(String teacherId);
+        RegisterResult<TeacherBaseInfo> registerTeacher(String teacherId);
 
         /**
         * 更新教师信息

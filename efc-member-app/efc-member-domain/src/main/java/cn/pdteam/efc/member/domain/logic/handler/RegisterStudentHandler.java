@@ -15,18 +15,20 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class RegisterStudentHandler extends BaseHandler<Student,Long> {
+public class RegisterStudentHandler extends BaseHandler<Student, Long> {
 
     @Autowired
     private StudentRepository repository;
 
     public Long handle(String studentId) {
         // TODO 从oracle服务器获取外部数据
-
+        Student student = new Student();
+        student.setId(5131364613153L);
+        student.setBasicInfo(new StudentBaseInfo().setStudentId(studentId));
         // TODO 组装实体，组装聚合根
 
         // TODO 调用doHandle方法
-        return doHandle(() -> repository.findByKey(1L));
+        return doHandle(() -> repository.findByKey(student.getId()));
     }
 
     /**

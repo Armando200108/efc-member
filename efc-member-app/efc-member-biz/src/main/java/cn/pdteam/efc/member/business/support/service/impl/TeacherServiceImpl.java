@@ -11,6 +11,7 @@ import cn.pdteam.efc.member.api.response.QueryMemberInfoResponse;
 import cn.pdteam.efc.member.api.response.RegisterMemberResponse;
 import cn.pdteam.efc.member.business.converter.TeacherConverter;
 import cn.pdteam.efc.member.business.support.service.TeacherInfoService;
+import cn.pdteam.efc.member.domain.entity.result.RegisterResult;
 import cn.pdteam.efc.member.domain.entity.student.TeacherBaseInfo;
 import cn.pdteam.efc.member.domain.logic.service.TeacherDomainService;
 import cn.pdteam.efc.member.domain.model.Teacher;
@@ -34,9 +35,9 @@ public class TeacherServiceImpl implements TeacherInfoService {
     @Override
     public RegisterMemberResponse registerTeacher(String teacherId) {
         log.info("biz ==> TeacherServiceImpl.registerTeacher, teacherId: {}", teacherId);
-        TeacherBaseInfo teacherBaseInfo = teacherDomainService.registerTeacher(teacherId);
-        log.info("biz ==> TeacherServiceImpl.registerTeacher, teacherBaseInfo: {}", JSON.toJSONString(teacherBaseInfo));
-        return teacherConverter.baseInfoConvert2RegisterResp(teacherBaseInfo);
+        RegisterResult<TeacherBaseInfo> teacherBaseInfoRegisterResult = teacherDomainService.registerTeacher(teacherId);
+        log.info("biz ==> TeacherServiceImpl.registerTeacher, teacherBaseInfo: {}", JSON.toJSONString(teacherBaseInfoRegisterResult));
+        return teacherConverter.registerResultConvert2RegisterResp(teacherBaseInfoRegisterResult);
     }
 
     /**
