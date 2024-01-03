@@ -43,8 +43,8 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>cn.pdteam.efc.member</groupId>
-            <artifactId>efc-member-domain</artifactId>
+            <groupId>cn.pdteam.efc</groupId>
+            <artifactId>efc-user-auth-party</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
