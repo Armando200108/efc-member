@@ -1,9 +1,16 @@
 package cn.pdteam.efc.member.infrastructure.converter;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.BeanUtils;
 
+import cn.pdteam.efc.member.domain.entity.common.ContactInfo;
+import cn.pdteam.efc.member.domain.entity.student.StudentAcademicUnit;
+import cn.pdteam.efc.member.domain.entity.student.StudentBaseInfo;
+import cn.pdteam.efc.member.domain.model.Student;
 import cn.pdteam.efc.member.infrastructure.dal.dataobject.BaseAcademicUnitDO;
 import cn.pdteam.efc.member.infrastructure.dal.dataobject.BaseInfoDO;
 import cn.pdteam.efc.member.infrastructure.dal.dataobject.ContactInfoDO;
@@ -75,5 +82,35 @@ public interface StudentDOConverter {
 
     @Mapping(target = "id", expression = "java(null)")
     StudentAcademicUnitDO toStudentAcademicUnitDO(StudentDO studentDO);
+
+    StudentBaseInfo toBaseInfoModel(StudentDO studentDO);
+
+    StudentDO toDataObject(StudentBaseInfo studentBaseInfo);
+
+    StudentAcademicUnit toAcademicUnitModel(StudentDO studentDO);
+
+    StudentDO toDataObject(StudentAcademicUnit studentAcademicUnit);
+
+    ContactInfo toContactInfoModel(StudentDO studentDO);
+
+    StudentDO toDataObject(ContactInfo contactInfo);
+
+    @Mapping(target = "basicInfo", expression = "java(toBaseInfoModel(studentDO))")
+    @Mapping(target = "academicUnit", expression = "java(toAcademicUnitModel(studentDO))")
+    @Mapping(target = "contactInfo", expression = "java(toContactInfoModel(studentDO))")
+    Student toModel(StudentDO studentDO);
+
+
+    default StudentDO toDataObject(Student student) {
+        StudentDO studentDO = new StudentDO();
+        BeanUtils.copyProperties(toDataObject(student.getBasicInfo()), studentDO);
+        BeanUtils.copyProperties(toDataObject(student.getAcademicUnit()), studentDO);
+        BeanUtils.copyProperties(toDataObject(student.getContactInfo()), studentDO);
+        return studentDO;
+    }
+
+    List<Student> toModelList(List<StudentDO> studentDOList);
+
+    List<StudentDO> toDataObjectList(List<Student> studentList);
 
 }
