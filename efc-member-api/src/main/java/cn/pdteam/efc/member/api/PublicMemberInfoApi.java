@@ -42,4 +42,5 @@ public interface PublicMemberInfoApi {
     @GetMapping
     ResultBase<QueryMemberInfoResponse> query(@RequestParam("type") QueryInfoPrimaryTypeEnum type, @RequestParam("id") String id);
 
+
 }
