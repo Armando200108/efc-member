@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @SpringBootApplication
 @EnableWebSecurity
 @EnableFeignClients(basePackages = "cn.pdteam.efc.user_auth")
-@ComponentScan(basePackages = {"cn.pdteam.efc.member", "cn.pdteam.efc.user_auth"})
+@ComponentScan(basePackages = {"cn.pdteam.efc.member", "cn.pdteam.efc"})
 public class MemberApplication {
     public static void main(String[] args) {
         SpringApplication.run(MemberApplication.class, args);

@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.pdteam.efc.member.infrastructure.dal.dao.StudentMapper">
+    <resultMap id="BaseResultMap" type="cn.pdteam.efc.member.infrastructure.dal.dataobject.StudentDO">
+        <!--@Table student_view-->
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="grade" jdbcType="INTEGER" property="grade"/>
+        <result column="student_id" jdbcType="VARCHAR" property="studentId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="ethnicity" jdbcType="VARCHAR" property="ethnicity"/>
+        <result column="id_card_number" jdbcType="VARCHAR" property="idCardNumber"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="id_card_photo" jdbcType="LONGVARCHAR" property="idCardPhoto"/>
+        <result column="class_id" jdbcType="BIGINT" property="classId"/>
+        <result column="class_name" jdbcType="VARCHAR" property="className"/>
+        <result column="college_id" jdbcType="BIGINT" property="collegeId"/>
+        <result column="college_name" jdbcType="VARCHAR" property="collegeName"/>
+        <result column="major_id" jdbcType="BIGINT" property="majorId"/>
+        <result column="major_name" jdbcType="VARCHAR" property="majorName"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="wechat" jdbcType="VARCHAR" property="wechat"/>
+        <result column="qq" jdbcType="VARCHAR" property="qq"/>
+        <result column="deleted" jdbcType="BOOLEAN" property="deleted"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="modifier" jdbcType="VARCHAR" property="modifier"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="extra_info" jdbcType="VARCHAR" property="extraInfo"/>
+    </resultMap>
+    <sql id="View_Column">
+        id,
+        grade,
+        student_id,
+        name,
+        gender,
+        ethnicity,
+        id_card_number,
+        birthday,
+        id_card_photo,
+        class_id,
+        class_name,
+        college_id,
+        college_name,
+        major_id,
+        major_name,
+        mobile,
+        email,
+        wechat,
+        qq,
+        deleted,
+        version,
+        creator,
+        modifier,
+        gmt_create,
+        gmt_modified,
+        extra_info
+    </sql>
+    <sql id="View_Where_Condition">
+        <where>
+            1 = 1
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="grade != null">
+                and grade = #{grade}
+            </if>
+            <if test="studentId != null and studentId != ''">
+                and student_id = #{studentId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="gender != null and gender != ''">
+                and gender = #{gender}
+            </if>
+            <if test="ethnicity != null and ethnicity != ''">
+                and ethnicity = #{ethnicity}
+            </if>
+            <if test="idCardNumber != null and idCardNumber != ''">
+                and id_card_number = #{idCardNumber}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="idCardPhoto != null and idCardPhoto != ''">
+                and id_card_photo = #{idCardPhoto}
+            </if>
+            <if test="classId != null">
+                and class_id = #{classId}
+            </if>
+            <if test="className != null and className != ''">
+                and class_name = #{className}
+            </if>
+            <if test="collegeId != null">
+                and college_id = #{collegeId}
+            </if>
+            <if test="collegeName != null and collegeName != ''">
+                and college_name = #{collegeName}
+            </if>
+            <if test="majorId != null">
+                and major_id = #{majorId}
+            </if>
+            <if test="majorName != null and majorName != ''">
+                and major_name = #{majorName}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="wechat != null and wechat != ''">
+                and wechat = #{wechat}
+            </if>
+            <if test="qq != null and qq != ''">
+                and qq = #{qq}
+            </if>
+        </where>
+    </sql>
+
+    <select id="select" parameterType="cn.pdteam.efc.member.infrastructure.dal.dataobject.StudentDO"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="View_Column"/>
+        FROM student_view
+        <include refid="View_Where_Condition"/>;
+    </select>
+
+    <update id="deleteByPrimaryKey" parameterType="long">
+        UPDATE student s
+            LEFT JOIN student_base_info sbi on sbi.id = s.base_info_id
+            LEFT JOIN base_info bi on bi.id = sbi.id
+            LEFT JOIN student_academic_unit sau on sau.id = s.academic_unit_id
+            LEFT JOIN base_academic_unit bau on bau.id = sau.base_academic_unit_id
+            LEFT JOIN contact_info ci on ci.id = s.contact_info_id
+        SET s.deleted   = 1,
+            sbi.deleted = 1,
+            bi.deleted  = 1,
+            sau.deleted = 1,
+            bau.deleted = 1,
+            ci.deleted  = 1
+        WHERE s.id = #{id};
+    </update>
+
+    <insert id="insertBaseInfo" parameterType="cn.pdteam.efc.member.infrastructure.dal.dataobject.BaseInfoDO">
+        INSERT INTO base_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="gender != null and gender != ''">
+                gender,
+            </if>
+            <if test="ethnicity != null and ethnicity != ''">
+                ethnicity,
+            </if>
+            <if test="idCardNumber != null and idCardNumber != ''">
+                id_card_number,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="idCardPhoto != null and idCardPhoto != ''">
+                id_card_photo,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="creator != null and creator != ''">
+                creator,
+            </if>
+            <if test="modifier != null and modifier != ''">
+                modifier,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                extra_info,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null and gender != ''">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="ethnicity != null and ethnicity != ''">
+                #{ethnicity,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardNumber != null and idCardNumber != ''">
+                #{idCardNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="idCardPhoto != null and idCardPhoto != ''">
+                #{idCardPhoto,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="creator != null and creator != ''">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="modifier != null and modifier != ''">
+                #{modifier,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                #{extraInfo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        ;
+    </insert>
+
+    <insert id="insertStudentBaseInfo" parameterType="cn.pdteam.efc.member.domain.entity.student.StudentBaseInfo">
+        INSERT INTO student_base_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="baseInfoId != null">
+                base_info_id,
+            </if>
+            <if test="grade != null">
+                grade,
+            </if>
+            <if test="studentId != null and studentId != ''">
+                student_id,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="creator != null and creator != ''">
+                creator,
+            </if>
+            <if test="modifier != null and modifier != ''">
+                modifier,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                extra_info,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="baseInfoId != null">
+                #{baseInfoId,jdbcType=BIGINT},
+            </if>
+            <if test="grade != null">
+                #{grade,jdbcType=INTEGER},
+            </if>
+            <if test="studentId != null and studentId != ''">
+                #{studentId,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="creator != null and creator != ''">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="modifier != null and modifier != ''">
+                #{modifier,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                #{extraInfo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        ;
+    </insert>
+
+    <insert id="insertStudentAcademicUnit"
+            parameterType="cn.pdteam.efc.member.infrastructure.dal.dataobject.StudentAcademicUnitDO">
+        INSERT INTO student_academic_unit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="baseAcademicUnitId != null">
+                base_academic_unit_id,
+            </if>
+            <if test="classId != null">
+                class_id,
+            </if>
+            <if test="className != null and className != ''">
+                class_name,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="creator != null and creator != ''">
+                creator,
+            </if>
+            <if test="modifier != null and modifier != ''">
+                modifier,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                extra_info,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="baseAcademicUnitId != null">
+                #{baseAcademicUnitId,jdbcType=BIGINT},
+            </if>
+            <if test="classId != null">
+                #{classId,jdbcType=BIGINT},
+            </if>
+            <if test="className != null and className != ''">
+                #{className,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="creator != null and creator != ''">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="modifier != null and modifier != ''">
+                #{modifier,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                #{extraInfo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        ;
+    </insert>
+
+    <insert id="insertBaseAcademicUnit"
+            parameterType="cn.pdteam.efc.member.infrastructure.dal.dataobject.BaseAcademicUnitDO">
+        INSERT INTO base_academic_unit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="collegeId != null">
+                college_id,
+            </if>
+            <if test="collegeName != null and collegeName != ''">
+                college_name,
+            </if>
+            <if test="majorId != null">
+                major_id,
+            </if>
+            <if test="majorName != null and majorName != ''">
+                major_name,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="creator != null and creator != ''">
+                creator,
+            </if>
+            <if test="modifier != null and modifier != ''">
+                modifier,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                extra_info,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="collegeId != null">
+                #{collegeId,jdbcType=BIGINT},
+            </if>
+            <if test="collegeName != null and collegeName != ''">
+                #{collegeName,jdbcType=VARCHAR},
+            </if>
+            <if test="majorId != null">
+                #{majorId,jdbcType=BIGINT},
+            </if>
+            <if test="majorName != null and majorName != ''">
+                #{majorName,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="creator != null and creator != ''">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="modifier != null and modifier != ''">
+                #{modifier,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                #{extraInfo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        ;
+    </insert>
+
+    <insert id="insertContactInfo" parameterType="cn.pdteam.efc.member.domain.entity.common.ContactInfo">
+        INSERT INTO contact_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile,
+            </if>
+            <if test="email != null and email != ''">
+                email,
+            </if>
+            <if test="wechat != null and wechat != ''">
+                wechat,
+            </if>
+            <if test="qq != null and qq != ''">
+                qq,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="creator != null and creator != ''">
+                creator,
+            </if>
+            <if test="modifier != null and modifier != ''">
+                modifier,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                extra_info,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null and email != ''">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="wechat != null and wechat != ''">
+                #{wechat,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null and qq != ''">
+                #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="creator != null and creator != ''">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="modifier != null and modifier != ''">
+                #{modifier,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                #{extraInfo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        ;
+    </insert>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="cn.pdteam.efc.member.infrastructure.dal.dataobject.StudentDO">
+        UPDATE student s
+            LEFT JOIN student_base_info sbi on sbi.id = s.base_info_id
+            LEFT JOIN base_info bi on bi.id = sbi.id
+            LEFT JOIN student_academic_unit sau on sau.id = s.academic_unit_id
+            LEFT JOIN base_academic_unit bau on bau.id = sau.base_academic_unit_id
+            LEFT JOIN contact_info ci on ci.id = s.contact_info_id
+        <set>
+            <trim suffixOverrides=",">
+                <if test="grade != null">
+                    sbi.grade=#{grade,jdbcType=INTEGER},
+                </if>
+                <if test="studentId != null and studentId != ''">
+                    sbi.student_id=#{studentId,jdbcType=VARCHAR},
+                </if>
+                <if test="name != null and name != ''">
+                    bi.name=#{name,jdbcType=VARCHAR},
+                </if>
+                <if test="gender != null and gender != ''">
+                    bi.gender=#{gender,jdbcType=VARCHAR},
+                </if>
+                <if test="ethnicity != null and ethnicity != ''">
+                    bi.ethnicity=#{ethnicity,jdbcType=VARCHAR},
+                </if>
+                <if test="idCardNumber != null and idCardNumber != ''">
+                    bi.id_card_number=#{idCardNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="birthday != null">
+                    bi.birthday=#{birthday,jdbcType=DATE},
+                </if>
+                <if test="idCardPhoto != null and idCardPhoto != ''">
+                    bi.id_card_photo=#{idCardPhoto,jdbcType=LONGVARCHAR},
+                </if>
+                <if test="classId != null">
+                    sau.class_id=#{classId,jdbcType=BIGINT},
+                </if>
+                <if test="className != null and className != ''">
+                    sau.class_name=#{className,jdbcType=VARCHAR},
+                </if>
+                <if test="collegeId != null">
+                    bau.college_id=#{collegeId,jdbcType=BIGINT},
+                </if>
+                <if test="collegeName != null and collegeName != ''">
+                    bau.college_name=#{collegeName,jdbcType=VARCHAR},
+                </if>
+                <if test="majorId != null">
+                    bau.major_id=#{majorId,jdbcType=BIGINT},
+                </if>
+                <if test="majorName != null and majorName != ''">
+                    bau.major_name=#{majorName,jdbcType=VARCHAR},
+                </if>
+                <if test="mobile != null and mobile != ''">
+                    ci.mobile=#{mobile,jdbcType=VARCHAR},
+                </if>
+                <if test="email != null and email != ''">
+                    ci.email=#{email,jdbcType=VARCHAR},
+                </if>
+                <if test="wechat != null and wechat != ''">
+                    ci.wechat=#{wechat,jdbcType=VARCHAR},
+                </if>
+                <if test="qq != null and qq != ''">
+                    ci.qq=#{qq,jdbcType=VARCHAR},
+                </if>
+                <if test="modifier != null and modifier != ''">
+                    s.modifier=#{modifier,jdbcType=VARCHAR},
+                    sbi.modifier=#{modifier,jdbcType=VARCHAR},
+                    bi.modifier=#{modifier,jdbcType=VARCHAR},
+                    sau.modifier=#{modifier,jdbcType=VARCHAR},
+                    bau.modifier=#{modifier,jdbcType=VARCHAR},
+                    ci.modifier=#{modifier,jdbcType=VARCHAR},
+                </if>
+                s.gmt_modified=now(),
+                sbi.gmt_modified=now(),
+                bi.gmt_modified=now(),
+                sau.gmt_modified=now(),
+                bau.gmt_modified=now(),
+                ci.gmt_modified=now(),
+                <if test="extraInfo != null and extraInfo != ''">
+                    s.extra_info=#{extraInfo,jdbcType=VARCHAR},
+                    sbi.extra_info=#{extraInfo,jdbcType=VARCHAR},
+                    bi.extra_info=#{extraInfo,jdbcType=VARCHAR},
+                    sau.extra_info=#{extraInfo,jdbcType=VARCHAR},
+                    bau.extra_info=#{extraInfo,jdbcType=VARCHAR},
+                    ci.extra_info=#{extraInfo,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </set>
+    </update>
+
+    <insert id="insertStudentBase">
+        INSERT INTO student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="baseInfoId != null">
+                base_info_id,
+            </if>
+            <if test="academicUnitId != null">
+                academic_unit_id,
+            </if>
+            <if test="contactInfoId != null">
+                contact_info_id,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="creator != null and creator != ''">
+                creator,
+            </if>
+            <if test="modifier != null and modifier != ''">
+                modifier,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                extra_info,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="baseInfoId != null">
+                #{baseInfoId,jdbcType=BIGINT},
+            </if>
+            <if test="academicUnitId != null">
+                #{academicUnitId,jdbcType=BIGINT},
+            </if>
+            <if test="contactInfoId != null">
+                #{contactInfoId,jdbcType=BIGINT},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+            <if test="creator != null and creator != ''">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="modifier != null and modifier != ''">
+                #{modifier,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="extraInfo != null and extraInfo != ''">
+                #{extraInfo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        ;
+    </insert>
+</mapper>
