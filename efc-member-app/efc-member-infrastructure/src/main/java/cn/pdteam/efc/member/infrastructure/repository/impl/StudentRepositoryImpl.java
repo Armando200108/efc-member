@@ -1,24 +1,30 @@
 package cn.pdteam.efc.member.infrastructure.repository.impl;
 
-import java.time.LocalDate;
-import java.util.Collections;
+import com.alibaba.fastjson2.JSON;
+import com.github.pagehelper.page.PageMethod;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.pdteam.efc.component.Page;
-import cn.pdteam.efc.enums.member.ChineseEthnicityEnum;
-import cn.pdteam.efc.enums.member.GenderEnum;
-import cn.pdteam.efc.member.domain.entity.common.ContactInfo;
-import cn.pdteam.efc.member.domain.entity.student.StudentAcademicUnit;
-import cn.pdteam.efc.member.domain.entity.student.StudentBaseInfo;
+import cn.pdteam.efc.enums.common.ErrorCodeEnum;
+import cn.pdteam.efc.exception.BizException;
 import cn.pdteam.efc.member.domain.model.Student;
 import cn.pdteam.efc.member.domain.repository.StudentRepository;
+import cn.pdteam.efc.member.infrastructure.converter.StudentDOConverter;
+import cn.pdteam.efc.member.infrastructure.dal.dataobject.StudentDO;
+import cn.pdteam.efc.member.infrastructure.dal.support.StudentDAOService;
 import lombok.extern.slf4j.Slf4j;
 
 @Repository
 @Slf4j
 public class StudentRepositoryImpl implements StudentRepository {
+
+    @Autowired
+    private StudentDAOService studentDAOService;
+
+    private final StudentDOConverter studentDOConverter = StudentDOConverter.INSTANCE;
 
     /**
      * 根据主键查询
@@ -28,14 +34,13 @@ public class StudentRepositoryImpl implements StudentRepository {
      */
     @Override
     public Student findByKey(Long key) {
-        Student student = new Student();
-        student.setId(key);
-        student.setBasicInfo(new StudentBaseInfo().setStudentId("2020020132").setGrade(2020));
-        student.getBasicInfo().setName("李东璋").setBirthday(LocalDate.of(2001, 8, 11)).setGender(GenderEnum.MALE).setEthnicity(ChineseEthnicityEnum.HAN).setIdCardNumber("230305200108110000").setIdCardPhoto("http://photo.com/ldz.png");
-        student.setAcademicUnit(new StudentAcademicUnit().setClassId(1L).setClassName("软件三班"));
-        student.getAcademicUnit().setCollegeId(1L).setCollegeName("计算机科学与信息工程学院").setMajorId(1L).setMajorName("软件工程");
-        student.setContactInfo(new ContactInfo().setQq("1098997251").setEmail("l.dzh@163.com").setMobile("13304617651").setWechat("Armando"));
-        return student;
+        long start = System.currentTimeMillis();
+        log.info("infra >>> StudentRepositoryImpl.findByKey");
+        StudentDO studentDO = studentDAOService.searchStudent((StudentDO) new StudentDO().setId(key))
+                .stream().findFirst().orElse(null);
+        Student model = studentDOConverter.toModel(studentDO);
+        log.info("infra <<< StudentRepositoryImpl.findByKey, cost: {}ms, data: {}", System.currentTimeMillis() - start, JSON.toJSONString(model));
+        return model;
     }
 
     /**
@@ -45,8 +50,18 @@ public class StudentRepositoryImpl implements StudentRepository {
      */
     @Override
     public Student save(Student data) {
-        log.info("save success!");
-        return data;
+        long start = System.currentTimeMillis();
+        log.info("infra >>> StudentRepositoryImpl.save start, data: {}", JSON.toJSONString(data));
+        StudentDO dataObject = studentDOConverter.toDataObject(data);
+        Long id = dataObject.getId();
+        if (ObjectUtils.isEmpty(data.getId())) {
+            id = studentDAOService.insertStudent(dataObject);
+        } else {
+            studentDAOService.update(dataObject);
+        }
+        Student student = findByKey(id);
+        log.info("infra <<< StudentRepositoryImpl.save end, cost: {}ms, data: {}", System.currentTimeMillis() - start, JSON.toJSONString(student));
+        return student;
     }
 
     /**
@@ -57,7 +72,18 @@ public class StudentRepositoryImpl implements StudentRepository {
      */
     @Override
     public Page<Student> page(Page<Student> page) {
-        page.setData(Collections.singletonList(this.findByKey(ObjectUtils.defaultIfNull(page.getCondition(), new Student().setId(1L)).getId())));
+        long start = System.currentTimeMillis();
+        log.info("infra >>> StudentRepositoryImpl.page start, page: {}", JSON.toJSONString(page));
+        StudentDO studentDO = studentDOConverter.toDataObject(page.getCondition());
+        try (com.github.pagehelper.Page<StudentDO> studentDOPage = PageMethod.startPage(page.getPageNum(), page.getSize()).doSelectPage(() -> studentDAOService.searchStudent(studentDO))) {
+            page.setData(studentDOConverter.toModelList(studentDOPage.getResult()));
+            page.setTotal(studentDOPage.getTotal());
+            page.setTotalPage(studentDOPage.getPages());
+        } catch (Exception e) {
+            log.error("infra >>> StudentRepositoryImpl.page error, page: {}", JSON.toJSONString(page), e);
+            throw new BizException(ErrorCodeEnum.SYS_0001);
+        }
+        log.info("infra <<< StudentRepositoryImpl.page end, cost: {}ms, page: {}", System.currentTimeMillis() - start, JSON.toJSONString(page));
         return page;
     }
 

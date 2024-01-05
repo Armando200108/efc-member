@@ -33,7 +33,7 @@ public class TeacherDAOService {
     }
 
     @Transactional
-    public void insertTeacher(TeacherDO teacherDO) {
+    public Long insertTeacher(TeacherDO teacherDO) {
         BaseAcademicUnitDO baseAcademicUnitDO = teacherDOConverter.toBaseAcademicUnitDO(teacherDO);
         baseAcademicUnitDO.setId(snowFlake.nextId());
 
@@ -62,6 +62,8 @@ public class TeacherDAOService {
         teacherMapper.insertTeacherAcademicUnit(teacherAcademicUnitDO);
         teacherMapper.insertTeacherBaseInfo(teacherBaseInfoDO);
         teacherMapper.insertTeacherBase(teacherBaseDO);
+
+        return teacherBaseDO.getId();
     }
     @Transactional
     public void update(TeacherDO teacherDO) {

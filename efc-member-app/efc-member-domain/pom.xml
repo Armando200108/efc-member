@@ -75,6 +75,10 @@
             <artifactId>efc-user-auth-party</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
     </dependencies>
 
 
