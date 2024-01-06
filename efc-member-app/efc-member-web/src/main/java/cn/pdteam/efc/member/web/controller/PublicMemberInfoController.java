@@ -1,11 +1,14 @@
 package cn.pdteam.efc.member.web.controller;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.pdteam.efc.component.ResultBase;
+import cn.pdteam.efc.enums.common.ErrorCodeEnum;
 import cn.pdteam.efc.enums.member.IdentityEnum;
 import cn.pdteam.efc.enums.member.QueryInfoPrimaryTypeEnum;
+import cn.pdteam.efc.exception.BizException;
 import cn.pdteam.efc.member.api.PublicMemberInfoApi;
 import cn.pdteam.efc.member.api.request.RegisterMemberRequest;
 import cn.pdteam.efc.member.api.response.QueryMemberInfoResponse;
@@ -67,6 +70,9 @@ public class PublicMemberInfoController implements PublicMemberInfoApi {
                         };
                     }
                 };
+        if (ObjectUtils.isEmpty(response)) {
+            throw new BizException(ErrorCodeEnum.MEM_WEB_0003);
+        }
         return ResultBase.success(response, "查询成功");
     }
 

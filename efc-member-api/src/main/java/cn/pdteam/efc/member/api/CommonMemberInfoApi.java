@@ -12,5 +12,6 @@ import jakarta.validation.Valid;
 @Valid
 public interface CommonMemberInfoApi {
     @GetMapping("/query")
+    @Deprecated
     ResultBase<QueryMemberInfoResponse> querySelf(Authentication authentication);
 }

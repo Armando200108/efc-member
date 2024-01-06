@@ -2,6 +2,7 @@ package cn.pdteam.efc.member.infrastructure.converter;
 
 import java.util.List;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -95,7 +96,7 @@ public interface TeacherDOConverter {
 
     TeacherDO toDataObject(ContactInfo contactInfo);
 
-    @Mapping(target = "basicInfo", expression = "java(toBaseInfoModel(teacherDO))")
+    @Mapping(target = "baseInfo", expression = "java(toBaseInfoModel(teacherDO))")
     @Mapping(target = "academicUnit", expression = "java(toAcademicUnitModel(teacherDO))")
     @Mapping(target = "contactInfo", expression = "java(toContactInfoModel(teacherDO))")
     Teacher toModel(TeacherDO teacherDO);
@@ -103,9 +104,15 @@ public interface TeacherDOConverter {
 
     default TeacherDO toDataObject(Teacher teacher) {
         TeacherDO teacherDO = new TeacherDO();
-        BeanUtils.copyProperties(toDataObject(teacher.getBaseInfo()), teacherDO);
-        BeanUtils.copyProperties(toDataObject(teacher.getAcademicUnit()), teacherDO);
-        BeanUtils.copyProperties(toDataObject(teacher.getContactInfo()), teacherDO);
+        if (ObjectUtils.isNotEmpty(teacher.getBaseInfo())) {
+            BeanUtils.copyProperties(toDataObject(teacher.getBaseInfo()), teacherDO);
+        }
+        if (ObjectUtils.isNotEmpty(teacher.getAcademicUnit())) {
+            BeanUtils.copyProperties(toDataObject(teacher.getAcademicUnit()), teacherDO);
+        }
+        if (ObjectUtils.isNotEmpty(teacher.getContactInfo())) {
+            BeanUtils.copyProperties(toDataObject(teacher.getContactInfo()), teacherDO);
+        }
         return teacherDO;
     }
 

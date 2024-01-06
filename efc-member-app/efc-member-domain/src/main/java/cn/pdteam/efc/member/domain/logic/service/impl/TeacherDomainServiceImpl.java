@@ -49,7 +49,9 @@ public class TeacherDomainServiceImpl implements TeacherDomainService {
     @Override
     public Teacher queryTeacherInfo(String teacherId) {
         log.info("domain ==> TeacherDomainServiceImpl.queryTeacherInfo, teacherId: {}", teacherId);
-        Teacher teacher = teacherRepository.page(new Page<Teacher>(1, 10).mapperCondition(new Teacher().setBaseInfo(new TeacherBaseInfo().setTeacherId(teacherId)))).getData().getFirst();
+        Teacher teacher = teacherRepository.page(new Page<Teacher>(1, 10)
+                        .mapperCondition(new Teacher().setBaseInfo(new TeacherBaseInfo().setTeacherId(teacherId)))).getData()
+                .stream().findFirst().orElse(null);
         log.info("domain ==> TeacherDomainServiceImpl.queryTeacherInfo, teacher: {}", JSON.toJSONString(teacher));
         return teacher;
     }

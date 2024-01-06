@@ -50,7 +50,7 @@ public class StudentDomainServiceImpl implements StudentDomainService {
         long start = System.currentTimeMillis();
         log.info("Student Domain Service => Query Student Info Start!");
         Page<Student> page = studentRepository.page(new Page<Student>(1, 10).mapperCondition(new Student().setBasicInfo(new StudentBaseInfo().setStudentId(studentId))));
-        Student student = page.getData().getFirst();
+        Student student = page.getData().stream().findFirst().orElse(null);
         log.info("Student Domain Service => Query Student Info End! Cost {} ms.Student: {}", System.currentTimeMillis() - start, student);
         return student;
     }
