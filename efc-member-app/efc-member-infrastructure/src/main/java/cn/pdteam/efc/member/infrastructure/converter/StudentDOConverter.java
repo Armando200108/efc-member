@@ -2,6 +2,7 @@ package cn.pdteam.efc.member.infrastructure.converter;
 
 import java.util.List;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -103,9 +104,15 @@ public interface StudentDOConverter {
 
     default StudentDO toDataObject(Student student) {
         StudentDO studentDO = new StudentDO();
-        BeanUtils.copyProperties(toDataObject(student.getBasicInfo()), studentDO);
-        BeanUtils.copyProperties(toDataObject(student.getAcademicUnit()), studentDO);
-        BeanUtils.copyProperties(toDataObject(student.getContactInfo()), studentDO);
+        if (ObjectUtils.isNotEmpty(student.getBasicInfo())) {
+            BeanUtils.copyProperties(toDataObject(student.getBasicInfo()), studentDO);
+        }
+        if (ObjectUtils.isNotEmpty(student.getAcademicUnit())) {
+            BeanUtils.copyProperties(toDataObject(student.getAcademicUnit()), studentDO);
+        }
+        if (ObjectUtils.isNotEmpty(student.getContactInfo())) {
+            BeanUtils.copyProperties(toDataObject(student.getContactInfo()), studentDO);
+        }
         return studentDO;
     }
 

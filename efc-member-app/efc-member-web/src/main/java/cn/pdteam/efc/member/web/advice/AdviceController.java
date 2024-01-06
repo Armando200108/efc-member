@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import cn.pdteam.efc.component.ResultBase;
 import cn.pdteam.efc.enums.common.ErrorCodeEnum;
+import cn.pdteam.efc.exception.BizException;
 import cn.pdteam.efc.exception.IllegalRequestException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,15 @@ public class AdviceController {
         log.error("请求参数", e);
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         return ResultBase.fail(e.getErrorCode().getErrorCode(), e.getErrorCode().getErrorMessage(), e.getErrorCode().getField());
+    }
+
+    @ExceptionHandler(BizException.class)
+    public ResultBase handleBizException(BizException e, HttpServletResponse response) {
+        log.error("业务异常", e);
+        if (response.getStatus() == 200) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        return ResultBase.fail(e.getErrorCode());
     }
 
     @ExceptionHandler(Exception.class)

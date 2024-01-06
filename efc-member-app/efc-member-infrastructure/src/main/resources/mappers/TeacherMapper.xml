@@ -113,7 +113,7 @@
         SELECT
         <include refid="View_Column"/>
         FROM teacher_view
-        <include refid="View_Where_Condition"/>;
+        <include refid="View_Where_Condition"/>
     </select>
 
     <update id="deleteByPrimaryKey" parameterType="long">
@@ -129,7 +129,7 @@
             tau.deleted = 1,
             bau.deleted = 1,
             ci.deleted  = 1
-        WHERE s.id = #{id};
+        WHERE s.id = #{id}
     </update>
 
     <insert id="insertBaseInfo" parameterType="cn.pdteam.efc.member.infrastructure.dal.dataobject.BaseInfoDO">
@@ -223,10 +223,11 @@
                 #{extraInfo,jdbcType=VARCHAR},
             </if>
         </trim>
-        ;
+
     </insert>
 
-    <insert id="insertTeacherBaseInfo" parameterType="cn.pdteam.efc.member.domain.entity.teacher.TeacherBaseInfo">
+    <insert id="insertTeacherBaseInfo"
+            parameterType="cn.pdteam.efc.member.infrastructure.dal.dataobject.TeacherBaseInfoDO">
         INSERT INTO teacher_base_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -293,7 +294,6 @@
                 #{extraInfo,jdbcType=VARCHAR},
             </if>
         </trim>
-        ;
     </insert>
 
     <insert id="insertTeacherAcademicUnit"
@@ -358,7 +358,6 @@
                 #{extraInfo,jdbcType=VARCHAR},
             </if>
         </trim>
-        ;
     </insert>
 
     <insert id="insertBaseAcademicUnit"
@@ -441,7 +440,6 @@
                 #{extraInfo,jdbcType=VARCHAR},
             </if>
         </trim>
-        ;
     </insert>
 
     <insert id="insertContactInfo" parameterType="cn.pdteam.efc.member.domain.entity.common.ContactInfo">
@@ -523,7 +521,6 @@
                 #{extraInfo,jdbcType=VARCHAR},
             </if>
         </trim>
-        ;
     </insert>
 
     <update id="updateByPrimaryKeySelective"
@@ -680,6 +677,5 @@
                 #{extraInfo,jdbcType=VARCHAR},
             </if>
         </trim>
-        ;
     </insert>
 </mapper>
