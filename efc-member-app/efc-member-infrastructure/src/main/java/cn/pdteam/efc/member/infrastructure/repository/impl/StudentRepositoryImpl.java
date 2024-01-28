@@ -3,6 +3,10 @@ package cn.pdteam.efc.member.infrastructure.repository.impl;
 import com.alibaba.fastjson2.JSON;
 import com.github.pagehelper.page.PageMethod;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -85,6 +89,25 @@ public class StudentRepositoryImpl implements StudentRepository {
         }
         log.info("infra <<< StudentRepositoryImpl.page end, cost: {}ms, page: {}", System.currentTimeMillis() - start, JSON.toJSONString(page));
         return page;
+    }
+
+    /**
+     * 根据学号查询学生List
+     *
+     * @param studentIdList 学号列表
+     * @return 聚合根对象
+     */
+    @Override
+    public List<Student> queryStudentInfoList(List<String> studentIdList) {
+        long start = System.currentTimeMillis();
+        log.info("infra >>> StudentRepositoryImpl.queryStudentInfoList start, studentIdList: {}", JSON.toJSONString(studentIdList));
+        List<StudentDO> studentDOList = studentDAOService.selectByStudentIdList(studentIdList);
+        List<Student> studentList = studentDOConverter.toModelList(studentDOList);
+        if (CollectionUtils.isEmpty(studentList)) {
+            studentList = Collections.emptyList();
+        }
+        log.info("infra <<< StudentRepositoryImpl.queryStudentInfoList end, cost: {}ms, studentList: {}", System.currentTimeMillis() - start, JSON.toJSONString(studentList));
+        return studentList;
     }
 
 }

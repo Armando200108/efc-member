@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.ObjectUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.BeanUtils;
 
@@ -19,7 +20,7 @@ import cn.pdteam.efc.member.infrastructure.dal.dataobject.StudentAcademicUnitDO;
 import cn.pdteam.efc.member.infrastructure.dal.dataobject.StudentBaseInfoDO;
 import cn.pdteam.efc.member.infrastructure.dal.dataobject.StudentDO;
 
-@Mapper
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface StudentDOConverter {
 
     StudentDOConverter INSTANCE = Mappers.getMapper(StudentDOConverter.class);
@@ -84,6 +85,8 @@ public interface StudentDOConverter {
     @Mapping(target = "id", expression = "java(null)")
     StudentAcademicUnitDO toStudentAcademicUnitDO(StudentDO studentDO);
 
+    @Mapping(target = "grade",expression = "java(studentDO.getGrade())")
+    @Mapping(target = "studentId",expression = "java(studentDO.getStudentId())")
     StudentBaseInfo toBaseInfoModel(StudentDO studentDO);
 
     StudentDO toDataObject(StudentBaseInfo studentBaseInfo);

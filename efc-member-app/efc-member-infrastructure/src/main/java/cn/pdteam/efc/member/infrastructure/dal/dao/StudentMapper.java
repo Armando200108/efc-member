@@ -1,6 +1,9 @@
 package cn.pdteam.efc.member.infrastructure.dal.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import cn.pdteam.efc.dao.BaseDAO;
 import cn.pdteam.efc.member.infrastructure.dal.dataobject.BaseAcademicUnitDO;
@@ -25,5 +28,7 @@ public interface StudentMapper extends BaseDAO<StudentDO> {
     int insertBaseAcademicUnit(BaseAcademicUnitDO baseAcademicUnitDO);
 
     int insertContactInfo(ContactInfoDO contactInfoDO);
+
+    List<StudentDO> selectByStudentIdList(@Param("studentIdList") List<String> studentId);
 
 }

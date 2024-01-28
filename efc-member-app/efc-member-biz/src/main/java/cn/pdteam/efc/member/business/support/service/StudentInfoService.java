@@ -1,5 +1,7 @@
 package cn.pdteam.efc.member.business.support.service;
 
+import java.util.List;
+
 import cn.pdteam.efc.member.api.response.QueryMemberInfoResponse;
 import cn.pdteam.efc.member.api.response.RegisterMemberResponse;
 
@@ -20,5 +22,13 @@ public interface StudentInfoService {
      * @return 学生信息
      */
     QueryMemberInfoResponse queryStudent(Object primaryCondition);
+
+    /**
+     * 批量查询学生信息
+     *
+     * @param studentIdList 学号列表
+     * @return 学生信息
+     */
+    List<QueryMemberInfoResponse> batchQueryStudent(List<String> studentIdList);
 
 }

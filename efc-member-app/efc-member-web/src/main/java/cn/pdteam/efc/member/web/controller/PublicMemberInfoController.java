@@ -1,5 +1,9 @@
 package cn.pdteam.efc.member.web.controller;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,6 +78,31 @@ public class PublicMemberInfoController implements PublicMemberInfoApi {
             throw new BizException(ErrorCodeEnum.MEM_WEB_0003);
         }
         return ResultBase.success(response, "查询成功");
+    }
+
+    /**
+     * 批量查询学生信息
+     *
+     * @param studentIdList 学号列表
+     * @return member info
+     */
+    @Override
+    public ResultBase<List<QueryMemberInfoResponse>> batchQuery(List<String> studentIdList) {
+        try{
+            List<QueryMemberInfoResponse> queryMemberInfoResponses;
+            if (CollectionUtils.isEmpty(studentIdList)) {
+                queryMemberInfoResponses = Collections.emptyList();
+                return ResultBase.success(queryMemberInfoResponses, "查询成功，但查询条件为空");
+            }
+            queryMemberInfoResponses = studentInfoService.batchQueryStudent(studentIdList);
+            if (CollectionUtils.isEmpty(queryMemberInfoResponses)) {
+                queryMemberInfoResponses = Collections.emptyList();
+            }
+            return ResultBase.success(queryMemberInfoResponses, "查询成功");
+        }catch (Exception e){
+            log.error("批量查询学生信息失败",e);
+            throw new BizException(ErrorCodeEnum.MEM_WEB_0003);
+        }
     }
 
 }

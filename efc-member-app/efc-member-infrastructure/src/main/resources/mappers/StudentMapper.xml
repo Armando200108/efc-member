@@ -720,4 +720,14 @@
             </if>
         </trim>
     </insert>
+
+    <select id="selectByStudentIdList" resultMap="BaseResultMap" parameterType="string">
+        SELECT
+        <include refid="View_Column"/>
+        FROM student_view
+        WHERE student_id IN
+        <foreach collection="studentIdList" item="studentId" open="(" separator="," close=")">
+            #{studentId}
+        </foreach>
+    </select>
 </mapper>
