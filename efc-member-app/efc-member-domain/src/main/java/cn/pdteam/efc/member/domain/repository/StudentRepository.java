@@ -1,5 +1,7 @@
 package cn.pdteam.efc.member.domain.repository;
 
+import java.util.List;
+
 import cn.pdteam.efc.component.Page;
 import cn.pdteam.efc.component.Repository;
 import cn.pdteam.efc.member.domain.model.Student;
@@ -52,5 +54,13 @@ public interface StudentRepository extends Repository<Student, Long> {
     default Page<Student> page(Page<Student> page) {
         return Repository.super.page(page);
     }
+
+    /**
+     * 根据学号查询学生List
+     *
+     * @param studentIdList 学号列表
+     * @return 聚合根对象
+     */
+    List<Student> queryStudentInfoList(List<String> studentIdList);
 
 }

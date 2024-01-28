@@ -1,5 +1,7 @@
 package cn.pdteam.efc.member.domain.logic.service;
 
+import java.util.List;
+
 import cn.pdteam.efc.member.domain.entity.result.RegisterResult;
 import cn.pdteam.efc.member.domain.entity.student.StudentBaseInfo;
 import cn.pdteam.efc.member.domain.model.Student;
@@ -42,6 +44,8 @@ public interface StudentDomainService {
      * @param student 学生信息
      */
     void updateStudent(Student student);
+
+    List<Student> queryStudentInfoList(List<String> studentIdList);
 
 
 }

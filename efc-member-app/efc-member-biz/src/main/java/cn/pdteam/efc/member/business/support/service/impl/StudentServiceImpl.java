@@ -1,5 +1,7 @@
 package cn.pdteam.efc.member.business.support.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +65,21 @@ public class StudentServiceImpl implements StudentInfoService {
             throw new BizException(ErrorCodeEnum.SYS_0001);
         }
 
+    }
+
+    /**
+     * 批量查询学生信息
+     *
+     * @param studentIdList 学号列表
+     * @return 学生信息
+     */
+    @Override
+    public List<QueryMemberInfoResponse> batchQueryStudent(List<String> studentIdList) {
+        log.info("batch query student start!");
+        List<Student> studentList = studentDomainService.queryStudentInfoList(studentIdList);
+        List<QueryMemberInfoResponse> studentResponseList = studentConverter.studentConvert2QueryRespList(studentList);
+        log.info("batch query student end!");
+        return studentResponseList;
     }
 
 }

@@ -1,5 +1,7 @@
 package cn.pdteam.efc.member.domain.logic.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,5 +79,13 @@ public class StudentDomainServiceImpl implements StudentDomainService {
         studentRepository.save(student);
     }
 
+    /**
+     * @param studentIdList
+     * @return
+     */
+    @Override
+    public List<Student> queryStudentInfoList(List<String> studentIdList) {
+        return studentRepository.queryStudentInfoList(studentIdList);
+    }
 
 }

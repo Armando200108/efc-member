@@ -69,4 +69,8 @@ public class StudentDAOService {
         studentMapper.updateByPrimaryKeySelective(studentDO);
     }
 
+    public List<StudentDO> selectByStudentIdList(List<String> studentIdList) {
+        return studentMapper.selectByStudentIdList(studentIdList);
+    }
+
 }

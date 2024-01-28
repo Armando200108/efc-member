@@ -1,5 +1,7 @@
 package cn.pdteam.efc.member.api;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,5 +44,13 @@ public interface PublicMemberInfoApi {
     @GetMapping
     ResultBase<QueryMemberInfoResponse> query(@RequestParam("type") QueryInfoPrimaryTypeEnum type, @RequestParam("id") String id);
 
+    /**
+     * 批量查询学生信息
+     *
+     * @param studentIdList 学号列表
+     * @return member info
+     */
+    @GetMapping("/batch")
+    ResultBase<List<QueryMemberInfoResponse>> batchQuery(@RequestParam("studentIdList") List<String> studentIdList);
 
 }

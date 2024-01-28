@@ -1,5 +1,7 @@
 package cn.pdteam.efc.member.business.converter;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -41,5 +43,7 @@ public interface StudentConverter {
     @Mapping(target = "qq", expression = "java(student.getContactInfo().getQq())")
     @Mapping(target = "wechat", expression = "java(student.getContactInfo().getWechat())")
     QueryMemberInfoResponse studentConvert2QueryResp(Student student);
+
+    List<QueryMemberInfoResponse> studentConvert2QueryRespList(List<Student> studentList);
 
 }
